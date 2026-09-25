@@ -7,3 +7,13 @@ if imagen is None:
 else:
     print("Imagen cargada correctamente")
     print("Tamaño:", imagen.shape)
+
+    pixel = imagen[0, 0]
+    print("Pixel (0, 0):", pixel)
+
+
+
+
+
+
+
