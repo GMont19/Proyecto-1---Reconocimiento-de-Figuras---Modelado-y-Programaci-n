@@ -1,4 +1,4 @@
-import imagenes
+import imagen
 import figuras
 
 
