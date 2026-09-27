@@ -1,0 +1,111 @@
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage[margin=2.5cm]{geometry}
+
+
+\title{\textbf{Proyecto 1: Reconocimiento de Figuras} \\ \large \textbf{Reporte Técnico}}
+\author{
+    Integrantes:
+}
+\date{Modelado y Programación \\ \today}
+
+\begin{document}
+
+\maketitle
+
+\section{Definición del problema}
+
+Dada una imagen en formato $.bmp$ que contiene una o más figuras geométricas
+de colores sólidos sobre un fondo también de color sólido, el programa debe reportar para cada
+figura presente en la imagen:
+
+\begin{itemize}
+    \item Su color, en formato hexadecimal.
+    \item Su clasificación en:
+    \begin{itemize}
+        \item \textbf{C} Cuadriláteros.
+        \item \textbf{T} Triángulos.
+        \item \textbf{O} Círculos.
+        \item \textbf{X} Otros (cualquier otra figura que no sea de las categorías anteriores).
+    \end{itemize}
+\end{itemize}
+
+\textbf{Pequeño ejemplo de salida:}\\ Forma: C \\ Color: Rojo %Solo es idea, falta corregir y mostrar buen ejemplo de la salida que da el programa.
+
+\section{Arsenal}
+
+\subsection{Lenguaje de programación}
+
+\begin{itemize}
+    \item \textbf{Python:} Nos decidimos por $Python$ como lenguaje de desarrollo porque cuenta con un buen ecosistema de bibliotecas para procesamiento de imágenes.
+    Además, tiene versatilidad y una sintaxis simple, lo cual facilita el trabajo colaborativo
+    y la familiarización con el lenguaje, otro punto a favor es que evita tener que preocuparse por cosas como punteros o memoria, presentes en otros lenguajes. 
+\end{itemize}
+
+\subsection{Bibliotecas}
+
+\begin{itemize}
+    \item \textbf{OpenCV:} Se eligió OpenCV por cubrir tanto la lectura de imagénes 
+    como las operaciones de detección de contornos, formas, segmentación, visión por computadora, etc.
+    Usar esta biblioteca agiliza el trabajo al evitar reimplementar estos algoritmos desde cero,
+    a la vez que reduce un poco la probabilidad de caer en errores de las operaciones.
+\end{itemize}
+
+Vale la pena mencionar que, se consideraron tres bibliotecas para el manejo de imágenes: $Pillow$, útil para operaciones de lectura, manipulación de píxeles, 
+colores y dimensiones pero limitada en análisis geométrico, $scikit-image$, orientada a procesamiento científico 
+con segmentación, regiones además de propiedades geométricas y $OpenCV$, especializada en visión por computadora con soporte directo para detección de contornos 
+y análisis de formas. Al tener una mejor oferta que se adaptaba a las necesidades del proyecto se optó por esta última opción.
+
+\section{Análisis del problema}
+
+
+\subsection{Supuestos}
+
+Mismos supuestos dados en el detallamiento del proyecto. 
+\begin{itemize}
+    \item El fondo de la imagen es de un solo color, uniforme.
+    \item Cada figura tiene un color sólido, distinto entre figuras y distinto del fondo.
+    \item No hay anti-aliasing ni colores intermedios en los bordes de las figuras.
+    \item Las figuras no se traslapan entre sí.
+    \item Tamaño rotación y posición de las figuras son arbitrarios.
+\end{itemize}
+
+\subsection{Casos límite identificados}
+
+\begin{itemize}
+    \item La imagen no cumple con las especificaciones del problema (sea una fotografía/imagen compleja con elementos distintos a las figuras esperadas). 
+    \textrightarrow{ Debe ser detectado por el programa y responder con un mensaje de error claro ('Imagen inválida') en vez de falle o dar una clasificación sin sentido.} 
+    \item La imagen no esta en el formato adecuado (no es $.bmp$).
+    \textrightarrow{ De igual manera se debe detectar ya que no se puede admitir esa entrada y responder con un mensaje ('Formato inválido').}
+    \item Imagen sin ninguna figura, solo un fondo de color sólido. 
+\end{itemize}
+
+\subsection{Requisitos funcionales}
+
+\begin{itemize}
+    \item Lectura de imagénes mediante la dirección de un archivo $.bmp$
+    \item Detección de figuras (C, T, O, X)
+    \item Detección de colores (formato hexadecimal).
+    \item Validación de entrada (formato de archivo e imagen)
+    \item Algoritmo de búsqueda/clasificación de figuras
+    \item Reporte de resultados al usuario: De forma clara y breve.
+\end{itemize}
+
+\subsection{Requisitos NO funcionales}
+
+\begin{itemize}
+    \item Rendimiento: El programa debe procesar una imagen de tamaño razonable en un tiempo aceptable.
+    \item Usabilidad: El programa regresa resultados comprensibles para el usuario.
+    \item Mantenibilidad:El código debe estar organizado en secciones con tareas bien definidas.
+    \item Robustez: El programa debe manejar entradas inválidas sin terminar de manera inesperada.
+    \item Portabilidad: El programa debe poder ejecutarse en los entornos definidos del proyecto.
+    \item Documentación del código: El código debe tener documentación suficiente para facilitar la comprensión y futuras modificaciones.
+\end{itemize}
+
+\section{Selección de la mejor alternativa} 
+%Algoritmo usado para la deteccion y clasificaciomn de figuras (¿porque lo preferimos?)
+
+\section{Diagrama de flujo o pseudocódigo}
+
+\end{document}
