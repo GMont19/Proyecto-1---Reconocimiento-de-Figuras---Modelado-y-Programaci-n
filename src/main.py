@@ -1,19 +1,18 @@
-import cv2
-
-imagen = cv2.imread("../bancoDeImg/captura_01.bmp")
-
-if imagen is None:
-    print("Error: no se pudo abrir la imagen")
-else:
-    print("Imagen cargada correctamente")
-    print("Tamaño:", imagen.shape)
-
-    pixel = imagen[0, 0]
-    print("Pixel (0, 0):", pixel)
+import imagenes
+import figuras
 
 
+imagenes = imagen.cargar("../bancoDeImg/captura_01.bmp")
 
+gris = imagen.a_gris(imagenes)
+binaria = imagen.binarizar(gris)
+limpia = imagen.limpiar(binaria)
 
+contornos = imagen.encontrar_contornos(limpia)
 
+print("Contornos encontrados:", len(contornos))
 
+for contorno in contornos:
+    vertices = figuras.cantidad_vertices(contorno)
+    print("Vértices:", vertices)
 
