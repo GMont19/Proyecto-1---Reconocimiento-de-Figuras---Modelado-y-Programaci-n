@@ -3,6 +3,7 @@ import glob
 import os
 import imagen
 import figuras
+import clasificador
 
 for ruta in sorted(glob.glob("../bancoDeImg/*.bmp")):
     img = imagen.cargar(ruta)
