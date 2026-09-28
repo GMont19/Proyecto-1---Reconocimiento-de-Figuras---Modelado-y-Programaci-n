@@ -10,52 +10,51 @@
 }
 \date{Modelado y Programación \\ \today}
 
-\begin{document}
-
-\maketitle
-
 \section{Definición del problema}
 
-Dada una imagen en formato $.bmp$ que contiene una o más figuras geométricas
-de colores sólidos sobre un fondo también de color sólido, el programa debe reportar para cada
-figura presente en la imagen:
-
 \begin{itemize}
-    \item Su color, en formato hexadecimal.
-    \item Su clasificación en:
+    \item \textbf{Entrada:} La ruta a una imagen en formato $.bmp$ que contiene una o más figuras geométricas de colores sólidos, sin traslaparse, sin degradados y sobre un fondo uniforme.
+    \item \textbf{Salida:} Reporte en consola para cada figura detectada en la imagen, determinando:
     \begin{itemize}
-        \item \textbf{C} Cuadriláteros.
-        \item \textbf{T} Triángulos.
-        \item \textbf{O} Círculos.
-        \item \textbf{X} Otros (cualquier otra figura que no sea de las categorías anteriores).
+        \item \textbf{Su color:} En formato hexadecimal (\texttt{\#RRGGBB}).
+        \item \textbf{Su clasificación:}
+        \begin{itemize}
+            \item \textbf{C:} Cuadriláteros.
+            \item \textbf{T:} Triángulos.
+            \item \textbf{O:} Círculos.
+            \item \textbf{X:} Otros (cualquier figura fuera de las categorías anteriores).
+        \end{itemize}
     \end{itemize}
 \end{itemize}
 
 \textbf{Pequeño ejemplo de salida:}\\ Forma: C \\ Color: Rojo %Solo es idea, falta corregir y mostrar buen ejemplo de la salida que da el programa.
+
+\subsection*{Ejemplo de salida en consola}
+\begin{lstlisting}[basicstyle=\ttfamily\small, frame=single, backgroundcolor=\color{gray!10}]
+[+] Procesando imagen: pruebas/figuras_01.bmp
+--------------------------------------------------
+Figura 1 | Tipo: T (Triangulo)     | Color: #FF0000
+Figura 2 | Tipo: C (Cuadrilatero)  | Color: #00FF00
+Figura 3 | Tipo: O (Circulo)       | Color: #0000FF
+Figura 4 | Tipo: X (Otro)          | Color: #FFFF00
+--------------------------------------------------
+Procesamiento finalizado con exito.
+\end{lstlisting}
 
 \section{Arsenal}
 
 \subsection{Lenguaje de programación}
 
 \begin{itemize}
-    \item \textbf{Python:} Nos decidimos por $Python$ como lenguaje de desarrollo porque cuenta con un buen ecosistema de bibliotecas para procesamiento de imágenes.
-    Además, tiene versatilidad y una sintaxis simple, lo cual facilita el trabajo colaborativo
-    y la familiarización con el lenguaje, otro punto a favor es que evita tener que preocuparse por cosas como punteros o memoria, presentes en otros lenguajes. 
+    \item \textbf{Python:} Nos decidimos por Python  como lenguaje de desarrollo por su sintaxis sencilla, clara y versátil, la cual facilita el trabajo colaborativo, la comprensión del código entre los integrantes del equipo y la división del sistema en módulos independientes. Asimismo, su gestión automática de memoria evita la complejidad de manejo de punteros presente en otros lenguajes. Además, cuenta con un sólido ecosistema de bibliotecas especializadas en procesamiento y análisis de imágenes, lo que permite manipular píxeles e identificar las características necesarias para detectar y clasificar las figuras geométricas en archivos .bmp. 
 \end{itemize}
 
-\subsection{Bibliotecas}
-
+\textbf{Bibliotecas:}
 \begin{itemize}
-    \item \textbf{OpenCV:} Se eligió OpenCV por cubrir tanto la lectura de imagénes 
-    como las operaciones de detección de contornos, formas, segmentación, visión por computadora, etc.
-    Usar esta biblioteca agiliza el trabajo al evitar reimplementar estos algoritmos desde cero,
-    a la vez que reduce un poco la probabilidad de caer en errores de las operaciones.
+    \item \textbf{OpenCV (\texttt{cv2}):} Se eligió porque, al ser una herramienta estándar en visión por computadora, es indispensable para procesar la imagen, filtrar el ruido y detectar las formas geométricas de cada figura.
+    \item \textbf{NumPy (\texttt{numpy}):} Se eligió por su eficiencia para manipular las imágenes como matrices de píxeles, lo que permite realizar los cálculos matemáticos necesarios para separar el fondo y analizar los colores.
+    \item \textbf{Bibliotecas estándar de Python (\texttt{os}, \texttt{glob}, \texttt{sys}):} Se ocuparon para gestionar la lectura de argumentos desde la terminal, validar las rutas de los archivos $.bmp$ e inspeccionar el banco de pruebas.
 \end{itemize}
-
-Vale la pena mencionar que, se consideraron tres bibliotecas para el manejo de imágenes: $Pillow$, útil para operaciones de lectura, manipulación de píxeles, 
-colores y dimensiones pero limitada en análisis geométrico, $scikit-image$, orientada a procesamiento científico 
-con segmentación, regiones además de propiedades geométricas y $OpenCV$, especializada en visión por computadora con soporte directo para detección de contornos 
-y análisis de formas. Al tener una mejor oferta que se adaptaba a las necesidades del proyecto se optó por esta última opción.
 
 \section{Análisis del problema}
 
@@ -104,8 +103,18 @@ Mismos supuestos dados en el detallamiento del proyecto.
 \end{itemize}
 
 \section{Selección de la mejor alternativa} 
-%Algoritmo usado para la deteccion y clasificaciomn de figuras (¿porque lo preferimos?)
+
+Se eligió un algoritmo determinista de segmentación por distancia euclidiana BGR evaluada respecto a la moda del fondo:
+
+$$d = \sqrt{(R_1 - R_2)^2 + (G_1 - G_2)^2 + (B_1 - B_2)^2}$$
+
+El flujo limpia la imagen mediante apertura morfológica (`cv2.MORPH_OPEN`), aproxima los vértices con el algoritmo de Ramer-Douglas-Peucker (`cv2.approxPolyDP`) y calcula la métrica de circularidad isoperimétrica:
+
+$$C = \frac{4\pi \cdot \text{Área}}{\text{Perímetro}^2}$$
+
+Se prefirió este método sobre la binarización fija porque se adapta dinámicamente a cambios en el fondo sin umbrales estáticos. Asimismo, se descartó la Transformada de Hough por su elevado costo computacional y rigidez ante polígonos de orientaciones arbitrarias, y se rechazó la Inteligencia Artificial por exigir entrenamiento previo, recolección de datos y recursos de cómputo innecesarios para formas geométricas simples.
 
 \section{Diagrama de flujo o pseudocódigo}
+
 
 \end{document}
