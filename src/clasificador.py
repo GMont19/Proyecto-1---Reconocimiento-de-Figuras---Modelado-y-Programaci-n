@@ -15,7 +15,7 @@ import figuras
 # CONFIGURACIÓN DE UMBRALES PARA CLASIFICACIÓN
 VERTICES_MIN_CIRC = 7
 APROX_CIRCULARIDAD = 0.80
-AREA_MINIMA = 10  # Filtro de ruido
+AREA_MINIMA = 10
 """
     Al igual que el mínimo de vertices el valor aproximado de circularidad
     se deja en este valor porque es a partir del cual el valor entraba a la 
