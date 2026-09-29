@@ -77,16 +77,17 @@ def angulos(contorno, precision=0.02):
 
 
 def caracteristicas(contorno, precision=0.02):
-    """   Nos dice  TODAS las caraterísticas geométricas del contorno.
-    IMPORTANTE: NO dcide qué figura es. Eso le toca a clasificador.py.
-    """
+    p = perimetro(contorno)
+    a = area(contorno)
+    aprox = aproximar_contorno(contorno, precision, perimetro=p).reshape(-1, 2).astype(float)
+
     return {
-        "vertices":     cantidad_vertices(contorno, precision),
-        "area":         area(contorno),
-        "perimetro":    perimetro(contorno),
-        "circularidad": circularidad(contorno),
-        "lados":        lados(contorno, precision),
-        "angulos":      angulos(contorno, precision),
+        "vertices": len(aprox),
+        "area": a,
+        "perimetro": p,
+        "circularidad": circularidad(contorno, area_val=a, perim_val=p),
+        "lados": _lados_desde_aprox(aprox),
+        "angulos": _angulos_desde_aprox(aprox),
     }
 
 
