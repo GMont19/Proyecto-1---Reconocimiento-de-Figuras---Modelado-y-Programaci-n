@@ -88,8 +88,8 @@ def caracteristicas(contorno, precision=0.02):
         "area": a,
         "perimetro": p,
         "circularidad": circularidad(contorno, area_val=a, perim_val=p),
-        "lados": _lados_desde_aprox(aprox),
-        "angulos": _angulos_desde_aprox(aprox),
+        "lados": lados(contorno, precision, aprox=aprox),
+        "angulos": angulos(contorno, precision, aprox=aprox),
     }
 
 
