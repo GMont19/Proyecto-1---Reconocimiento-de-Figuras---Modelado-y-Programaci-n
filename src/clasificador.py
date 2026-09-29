@@ -12,9 +12,7 @@ import figuras
     circulo juega papel con su valor de circulridad. Es preferible dejar el mínimo un número abajo, no menos por si llegara haber 
     presencia de poligonos de 6 vertices
 """
-# CONFIGURACIÓN DE UMBRALES PARA CLASIFICACIÓN
 VERTICES_MIN_CIRC = 7
-APROX_CIRCULARIDAD = 0.80
 AREA_MINIMA = 10
 """
     Al igual que el mínimo de vertices el valor aproximado de circularidad
