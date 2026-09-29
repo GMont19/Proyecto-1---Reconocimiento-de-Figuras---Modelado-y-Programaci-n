@@ -59,7 +59,9 @@ def lados(contorno, precision=0.02):
 
 
 def angulos(contorno, precision=0.02):
-    aprox = aproximar_contorno(contorno, precision).reshape(-1, 2).astype(float)
+  def angulos(contorno, precision=0.02, aprox=None):
+    if aprox is None:
+        aprox = aproximar_contorno(contorno, precision).reshape(-1, 2).astype(float)
     n = len(aprox)
     resultado = []
     for i in range(n):
