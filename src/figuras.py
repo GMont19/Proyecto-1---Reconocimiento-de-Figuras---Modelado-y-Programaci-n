@@ -2,8 +2,9 @@ import cv2
 import numpy as np
 
 
-def aproximar_contorno(contorno, precision=0.02):
-    perimetro = cv2.arcLength(contorno, True)
+def aproximar_contorno(contorno, precision=0.02, perimetro=None):
+    if perimetro is None:
+        perimetro = cv2.arcLength(contorno, True)
     return cv2.approxPolyDP(contorno, precision * perimetro, True)
 
 
