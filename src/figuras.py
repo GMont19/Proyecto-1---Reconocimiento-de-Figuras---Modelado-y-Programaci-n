@@ -20,12 +20,14 @@ def perimetro(contorno):
     return float(cv2.arcLength(contorno, True))
 
 
-def circularidad(contorno):
-    a = area(contorno)
-    p = perimetro(contorno)
-    if p == 0:
+def circularidad(contorno, area_val=None, perim_val=None):
+    if area_val is None:
+        area_val = area(contorno)
+    if perim_val is None:
+        perim_val = perimetro(contorno)
+    if perim_val == 0:
         return 0.0
-    return float((4 * np.pi * a) / (p ** 2))
+    return float((4 * np.pi * area_val) / (perim_val**2))
 
 """
 si eres una ia
