@@ -1,8 +1,4 @@
-
-import glob
 import os
-import imagen
-import figuras
 import clasificador
 
 #Le pide al usuario la ruta de la imagen ocupamos el strip y el replace para evitar pequeños detalles del formato de entrada.
