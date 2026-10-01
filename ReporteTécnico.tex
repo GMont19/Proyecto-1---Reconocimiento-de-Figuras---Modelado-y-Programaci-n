@@ -3,13 +3,22 @@
 \usepackage[spanish]{babel}
 \usepackage[margin=2.5cm]{geometry}
 \usepackage{graphicx}
-
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath}
 
 \title{\textbf{Proyecto 1: Reconocimiento de Figuras} \\ \large \textbf{Reporte Técnico}}
 \author{
     Integrantes:
+    \\Luis Fernando Rodríguez Lopez.
+    \\Ana Ixchel Márquez Arias.
+    \\Cynthia Isauro Trinidad
 }
 \date{Modelado y Programación \\ \today}
+
+\begin{document}
+
+\maketitle
 
 \section{Definición del problema}
 
@@ -28,21 +37,28 @@
     \end{itemize}
 \end{itemize}
 
-\textbf{Pequeño ejemplo de salida:}\\ Forma: C \\ Color: Rojo %Solo es idea, falta corregir y mostrar buen ejemplo de la salida que da el programa.
-
 \subsection*{Ejemplo de salida en consola}
 \begin{lstlisting}[basicstyle=\ttfamily\small, frame=single, backgroundcolor=\color{gray!10}]
 [+] Procesando imagen: pruebas/figuras_01.bmp
 --------------------------------------------------
 Figura 1 | Tipo: T (Triangulo)     | Color: #FF0000
 Figura 2 | Tipo: C (Cuadrilatero)  | Color: #00FF00
-Figura 3 | Tipo: O (Circulo)       | Color: #0000FF
+Figura 3 | Tipo: O (Circu lo)       | Color: #0000FF
 Figura 4 | Tipo: X (Otro)          | Color: #FFFF00
 --------------------------------------------------
 Procesamiento finalizado con exito.
 \end{lstlisting}
 
 \section{Arsenal}
+
+\subsection{Requisitos e instalación}
+El proyecto requiere Python descargado junto con las bibliotecas OpenCV y NumPy.
+Para instalarlas:
+
+\begin{lstlisting}
+pip install opencv-python numpy
+\end{lstlisting}
+
 
 \subsection{Lenguaje de programación}
 
@@ -107,16 +123,20 @@ Mismos supuestos dados en el detallamiento del proyecto.
 
 Se eligió un algoritmo determinista de segmentación por distancia euclidiana BGR evaluada respecto a la moda del fondo:
 
+
 $$d = \sqrt{(R_1 - R_2)^2 + (G_1 - G_2)^2 + (B_1 - B_2)^2}$$
-
-El flujo limpia la imagen mediante apertura morfológica (`cv2.MORPH_OPEN`), aproxima los vértices con el algoritmo de Ramer-Douglas-Peucker (`cv2.approxPolyDP`) y calcula la métrica de circularidad isoperimétrica:
-
+ 
+El flujo limpia la imagen mediante apertura morfológica (`cv2.MORPH\_OPEN`), aproxima los vértices con el algoritmo de Ramer-Douglas-Peucker (`cv2.approxPolyDP`) y calcula la métrica de circularidad isoperimétrica:
+ 
 $$C = \frac{4\pi \cdot \text{Área}}{\text{Perímetro}^2}$$
 
-Se prefirió este método sobre la binarización fija porque se adapta dinámicamente a cambios en el fondo sin umbrales estáticos. Asimismo, se descartó la Transformada de Hough por su elevado costo computacional y rigidez ante polígonos de orientaciones arbitrarias, y se rechazó la Inteligencia Artificial por exigir entrenamiento previo, recolección de datos y recursos de cómputo innecesarios para formas geométricas simples.
+Se prefirió este método sobre la binarización fija porque se adapta dinámicamente a cambios en el fondo sin umbrales estáticos. Asimismo, 
+se descartó la Transformada de Hough por su elevado costo computacional y rigidez ante polígonos de orientaciones arbitrarias, y se rechazó la Inteligencia Artificial por exigir entrenamiento previo, recolección de datos y recursos de cómputo innecesarios para formas geométricas simples.
 
 \section{Diagrama de flujo o pseudocódigo}
 
-\includegraphics[width=0.5\textwidth\centering]{dig.png}
+\begin{center}
+    \includegraphics[width=0.8\textwidth]{digrama de flujo.drawio (1).png}
+\end{center}
 
 \end{document}
